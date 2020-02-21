@@ -1,0 +1,7 @@
+LIBRARY	"clsSec"
+EXPORTS
+	clsSec
+	clsSec_Hook
+	clsSec_Start
+	clsSec_ErrLook
+	clsSec_GenRnd
