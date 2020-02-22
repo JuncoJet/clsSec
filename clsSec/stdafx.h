@@ -30,5 +30,7 @@
 #include <sstream>
 #include <map>
 #include "TclsSec.h"
+// 易语言开关
+#define FOR_ELNG
 
 // TODO: 在此处引用程序需要的其他头文件
