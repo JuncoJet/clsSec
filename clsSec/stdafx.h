@@ -32,5 +32,7 @@
 #include "TclsSec.h"
 // 易语言开关
 //#define FOR_ELNG
+// 导入表注入开关
+#define DLLATTACH
 
 // TODO: 在此处引用程序需要的其他头文件

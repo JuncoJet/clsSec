@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 
-TclsSec *cls;
+TclsSec *cls=0;
 DWORD (WINAPI *oRegisterClassA)(WNDCLASSA *lpWndClass);
 DWORD WINAPI nRegisterClassA(WNDCLASSA *lpWndClass){
 	char *p=(char*)lpWndClass->lpszClassName;
@@ -23,6 +23,8 @@ void* __fastcall setHook(void *src,void *des,int sz){
 	return jmp-sz;
 }
 int WINAPI clsSec_Start(){
+	if(oRegisterClassA)
+		return 0;
 	*(void**)&oRegisterClassA=setHook(
 		GetProcAddress(LoadLibrary("user32"),"RegisterClassA"),nRegisterClassA,5
 	);
@@ -41,13 +43,25 @@ void WINAPI clsSec_Destroy(){
 	delete cls;
 }
 void* WINAPI clsSec(){
-	cls=new TclsSec;
+	if(!cls)
+		cls=new TclsSec;
 	return cls;
+}
+void clsSec_DllAttach(){
+	cls=new TclsSec;
+	cls->hook("ThunderRT6HScrollBar","#32769");
+	clsSec_Start();
 }
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
                        LPVOID lpReserved
 					 )
 {
+#ifdef DLLATTACH
+	if(ul_reason_for_call==DLL_PROCESS_ATTACH){
+		//通过导入表注入修改类名
+		clsSec_DllAttach();
+	}
+#endif
     return TRUE;
 }

@@ -104,7 +104,7 @@ Private Sub Form_Initialize()
         clsSec_Hook "ThunderRT6TextBox", "JuncoJet"
         clsSec_Hook "ThunderRT6CommandButton", "TButton"
         clsSec_Hook "ThunderRT6PictureBoxDC", "TPanel"
-        clsSec_Hook "ThunderRT6HScrollBar", "THScroll"
+        'clsSec_Hook "ThunderRT6HScrollBar", "THScroll" '通过DllAttach方式来修改
         clsSec_Hook "ThunderRT6VScrollBar", "TVScroll"
         '超长类名
         clsSec_Hook "ThunderRT6CheckBox", "01234568890123456889012345688901234568890123456889012345688901234568890123456889"
