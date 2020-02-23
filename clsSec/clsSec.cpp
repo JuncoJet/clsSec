@@ -3,7 +3,8 @@
 
 #include "stdafx.h"
 
-TclsSec *cls=0;
+TclsSec *cls=NULL;
+void *addr;
 DWORD (WINAPI *oRegisterClassA)(WNDCLASSA *lpWndClass);
 DWORD WINAPI nRegisterClassA(WNDCLASSA *lpWndClass){
 	char *p=(char*)lpWndClass->lpszClassName;
@@ -25,8 +26,9 @@ void* __fastcall setHook(void *src,void *des,int sz){
 int WINAPI clsSec_Start(){
 	if(oRegisterClassA)
 		return 0;
+	addr=GetProcAddress(LoadLibrary("user32"),"RegisterClassA");
 	*(void**)&oRegisterClassA=setHook(
-		GetProcAddress(LoadLibrary("user32"),"RegisterClassA"),nRegisterClassA,5
+		addr,nRegisterClassA,5
 	);
 	return 1;
 }
@@ -40,18 +42,23 @@ int WINAPI clsSec_GenRnd(char *p,int sz){
 	return cls->gen_rnd(p,sz);
 }
 void WINAPI clsSec_Destroy(){
+	SIZE_T r;
+	WriteProcessMemory((HANDLE)-1,addr,oRegisterClassA,5,&r);
 	delete cls;
+	cls=NULL;
 }
 void* WINAPI clsSec(){
 	if(!cls)
 		cls=new TclsSec;
 	return cls;
 }
+#ifdef DLLATTACH
 void clsSec_DllAttach(){
 	cls=new TclsSec;
 	cls->hook("ThunderRT6HScrollBar","#32769");
 	clsSec_Start();
 }
+#endif
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
                        LPVOID lpReserved
