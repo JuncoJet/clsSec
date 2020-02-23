@@ -1,11 +1,12 @@
 #pragma once
 #include "stdafx.h"
 using namespace std;
+using namespace stdext;
 
 class TclsSec{
 	int seed;
 	char tpl[65];
-	map<string,string> dic;
+	hash_map<string,string> dic;
 	void new_seed();
 	void msgbox(string msg);
 public:

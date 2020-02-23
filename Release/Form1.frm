@@ -91,6 +91,7 @@ Private Declare Function clsSec Lib "clsSec" () As Long
 Private Declare Function clsSec_Hook Lib "clsSec" (ByVal onm As String, ByVal nnm As String) As Long
 Private Declare Function clsSec_GenRnd Lib "clsSec" (ByVal p As String, ByVal sz As Long) As Long
 Private Declare Function clsSec_Start Lib "clsSec" () As Long
+Private Declare Sub clsSec_Destroy Lib "clsSec" ()
 Private Declare Sub clsSec_ErrLook Lib "clsSec" (ByVal code As Long)
 
 Private Sub Form_Initialize()
@@ -118,4 +119,6 @@ Private Sub Form_Load()
     If clsSec_GenRnd(p, 64) Then
         Form1.Caption = p
     End If
+    '退出销毁clsSec,可防止被外部程序读出内存数据
+    clsSec_Destroy
 End Sub

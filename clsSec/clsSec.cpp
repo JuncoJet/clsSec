@@ -37,6 +37,9 @@ void WINAPI clsSec_ErrLook(int code){
 int WINAPI clsSec_GenRnd(char *p,int sz){
 	return cls->gen_rnd(p,sz);
 }
+void WINAPI clsSec_Destroy(){
+	delete cls;
+}
 void* WINAPI clsSec(){
 	cls=new TclsSec;
 	return cls;

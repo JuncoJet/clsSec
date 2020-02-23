@@ -38,7 +38,7 @@ void TclsSec::msgbox(string msg){
 	MessageBox(0,msg.c_str(),"clsSec",0);
 }
 char* TclsSec::check(char *nm){
-	map<string,string>::iterator it;
+	hash_map<string,string>::iterator it;
 	it=dic.find(nm);
 	if(it!=dic.end()){
 #ifdef FOR_ELNG
