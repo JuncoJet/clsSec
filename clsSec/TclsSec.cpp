@@ -9,7 +9,7 @@ TclsSec::~TclsSec(void){
 	
 }
 int TclsSec::hook(string onm,char *nnm){
-	if(nnm){
+	if(nnm&&nnm[0]){
 		dic[onm]=nnm;
 	}else{
 		new_seed();
@@ -20,9 +20,6 @@ int TclsSec::hook(string onm,char *nnm){
 		dic[onm]=ss.str();
 	}
 	return 0;
-}
-int TclsSec::hook(string onm,string nnm){
-	return hook(onm,(char*)nnm.c_str());
 }
 void TclsSec::new_seed(){
 	if(!seed){

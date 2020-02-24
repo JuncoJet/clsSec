@@ -67,7 +67,7 @@ void clsSec_DllAttach(){
 	Tini ini(ss.str(),"clsSec");
 	cls=new TclsSec;
 	for(int i=0;i<1000;i++){
-		string k,v,s=ini.get(i);
+		string s=ini.get(i);
 		int len=s.length();
 		if(len){
 			len++;
@@ -75,12 +75,10 @@ void clsSec_DllAttach(){
 			for(int x=0;x<len;x++){
 				if(buf[x]==','){
 					buf[x]='\0';
-					v=&buf[++x];
+					cls->hook(buf,&buf[++x]);
 					break;
 				}
 			}
-			k=buf;
-			cls->hook(k,v);
 		}else{
 			break;
 		}
