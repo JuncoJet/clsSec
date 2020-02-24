@@ -54,8 +54,37 @@ void* WINAPI clsSec(){
 }
 #ifdef DLLATTACH
 void clsSec_DllAttach(){
+	char buf[300];
+	stringstream ss;
+	GetModuleFileName(NULL,buf,MAX_PATH);
+	for(int i=strlen(buf);i>0;i--){
+		if(buf[i]=='\\'){
+			buf[++i]='\0';
+			ss<<buf<<"clsSec.ini";
+			break;
+		}
+	}
+	Tini ini(ss.str(),"clsSec");
 	cls=new TclsSec;
-	cls->hook("ThunderRT6HScrollBar","#32769");
+	for(int i=0;i<1000;i++){
+		string k,v,s=ini.get(i);
+		int len=s.length();
+		if(len){
+			len++;
+			memcpy(buf,s.c_str(),len);
+			for(int x=0;x<len;x++){
+				if(buf[x]==','){
+					buf[x]='\0';
+					v=&buf[++x];
+					break;
+				}
+			}
+			k=buf;
+			cls->hook(k,v);
+		}else{
+			break;
+		}
+	}
 	clsSec_Start();
 }
 #endif

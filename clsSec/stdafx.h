@@ -30,6 +30,7 @@
 #include <sstream>
 #include <hash_map>
 #include "TclsSec.h"
+#include "Tini.h"
 // 易语言开关
 //#define FOR_ELNG
 // 导入表注入开关

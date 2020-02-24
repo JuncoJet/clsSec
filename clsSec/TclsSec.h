@@ -14,6 +14,7 @@ public:
 	int gen_rnd(char *p,int sz);
 	void err_look(int code);
 	int hook(string onm,char *nnm);
+	int hook(string onm,string nnm);
 	TclsSec(void);
 	~TclsSec(void);
 };

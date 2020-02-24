@@ -21,6 +21,9 @@ int TclsSec::hook(string onm,char *nnm){
 	}
 	return 0;
 }
+int TclsSec::hook(string onm,string nnm){
+	return hook(onm,(char*)nnm.c_str());
+}
 void TclsSec::new_seed(){
 	if(!seed){
 		seed=GetTickCount();
